@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyTrace.ProductPage">
+
+    <ContentPage.Content>
+        <Grid>
+            <ActivityIndicator x:Name="LoadingIndicator"
+                               IsRunning="True"
+                               IsVisible="True"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand" />
+
+            <ScrollView x:Name="ContentScrollView"
+                        IsVisible="False">
+                <VerticalStackLayout
+                    Padding="30,0"
+                    Spacing="25">
+
+                    <Image x:Name="ProductImage"
+                           IsVisible="False"
+                           WidthRequest="200"
+                           HeightRequest="200"
+                           Aspect="AspectFit" />
+
+                    <Label x:Name="ProductName"
+                           IsVisible="False"
+                           Style="{StaticResource Headline}"
+                           SemanticProperties.HeadingLevel="Level1" />
+
+                    <Label x:Name="ProductPrice"
+                           IsVisible="False"
+                           TextColor="Green"
+                           Style="{StaticResource SubHeadline}" />
+
+                    <Label x:Name="ProductDescription"
+                           IsVisible="False"
+                           Style="{StaticResource Body}" />
+
+                    <Label x:Name="BrandLabel"
+                           IsVisible="False"
+                           Style="{StaticResource Body}" />
+
+                    <Label x:Name="BarcodeLabel"
+                           IsVisible="False"
+                           Style="{StaticResource Body}" />
+
+                    <Label x:Name="IngredientsLabel"
+                           IsVisible="False"
+                           Style="{StaticResource Body}" />
+
+                    <StackLayout x:Name="NutritionInfoContainer"
+                                 IsVisible="False">
+                        <Label Text="Nutritional Information"
+                               FontAttributes="Bold"
+                               Style="{StaticResource SubHeadline}" />
+                        <CollectionView x:Name="NutritionInfoCollectionView">
+                            <CollectionView.Header>
+                                <Grid Padding="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="Component" FontAttributes="Bold" Grid.Column="0" />
+                                    <Label Text="Per Serving" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="End" />
+                                    <Label Text="Per 100g" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="End" />
+                                </Grid>
+                            </CollectionView.Header>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding Component}" Grid.Column="0" />
+                                        <Label Text="{Binding PerServing}" Grid.Column="1" HorizontalOptions="End" />
+                                        <Label Text="{Binding Per100g}" Grid.Column="2" HorizontalOptions="End" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+
+                    <Label x:Name="ErrorLabel"
+                           Text="Product not found!"
+                           IsVisible="False"
+                           Style="{StaticResource SubHeadline}"
+                           BackgroundColor="PaleVioletRed"
+                           TextColor="DarkRed" />
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

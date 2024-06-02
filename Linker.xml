@@ -1,0 +1,9 @@
+﻿<linker>
+	<assembly fullname="MyTrace">
+		<type fullname="MyTrace.App">
+			<method name="InitializeComponent" preserve="all" />
+		</type>
+		<type fullname="MyTrace.Resources.Styles.Styles" preserve="all"/>
+		<type fullname="MyTrace.Resources.Styles.Colors" preserve="all"/>
+	</assembly>
+</linker>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+    
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="MyTrace.BarcodeScanner"
+             Title="BarcodeScanner">
+    
+    <Grid RowDefinitions="1*,3*,1*">
+
+        <zxing:CameraBarcodeReaderView
+			Grid.Row="0" Grid.RowSpan="3"
+			x:Name="barcodeView"
+			BarcodesDetected="BarcodesDetected"
+			 />
+
+        <Grid
+			Grid.Row="0"
+			BackgroundColor="#aa000000">
+            <Label x:Name="ResultLabel" Grid.Row="2" Text="Searching for barcode..." HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" />
+            <Label x:Name="DebugLabel" IsVisible="false" Grid.Row="3" Text="" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Yellow" />
+            <Label x:Name="ErrorLabel" IsVisible="false" Grid.Row="4" Text="" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Red" />
+            
+        </Grid>
+
+        <Grid
+			Grid.Row="2"
+			BackgroundColor="#aa000000"
+			Padding="20"
+			ColumnDefinitions="*,*">
+
+            <Button Text="🔄️" Grid.Column="0" BackgroundColor="#aa000000" CornerRadius="8" BorderColor="Black" Clicked="SwitchCameraButton_Clicked" />
+            <Button Text="💡" Grid.Column="1" BackgroundColor="#aa000000" CornerRadius="8" BorderColor="Black" Clicked="TorchButton_Clicked" />
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
