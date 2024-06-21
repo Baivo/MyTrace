@@ -1,23 +1,21 @@
 using Microsoft.Maui.Controls.Xaml;
+using MyTraceLib.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
 namespace MyTrace
 {
-    using MyTrace.Data.Woolworths;
-    using MyTrace.Helpers;
+    
     using System.Linq;
     using Microsoft.Maui.Controls;
 
     public partial class ProductPage : ContentPage
     {
         string BarcodeValue { get; set; } = string.Empty;
-        WooliesAPIHelper WooliesAPIHelper { get; set; }
 
         public ProductPage(string barcode)
         {
             BarcodeValue = barcode;
-            WooliesAPIHelper = new WooliesAPIHelper();
             InitializeComponent();
         }
 
@@ -35,7 +33,7 @@ namespace MyTrace
 
         private async void GetProductAsync()
         {
-            var product = await WooliesAPIHelper.RequestProductFromBarcodeAsync(BarcodeValue);
+            var product = await WoolworthsSqlService.GetProductByBarcodeAsync(BarcodeValue);
 
             if (product != null)
             {
@@ -43,38 +41,39 @@ namespace MyTrace
                 ContentScrollView.IsVisible = true;
 
                 ProductImage.IsVisible = true;
-                ProductImage.Source = product.Product.LargeImageFile;
+                ProductImage.Source = product.LargeImageFile;
 
                 ProductName.IsVisible = true;
-                ProductName.Text = product.Product.Name;
+                ProductName.Text = product.Name;
 
                 ProductPrice.IsVisible = true;
-                ProductPrice.Text = $"${product.Product.Price:0.00}";
+                ProductPrice.Text = $"${product.Price:0.00}";
 
                 ProductDescription.IsVisible = true;
-                ProductDescription.Text = product.Product.Description;
+                ProductDescription.Text = product.Description;
 
                 BrandLabel.IsVisible = true;
-                BrandLabel.Text = $"Brand: {product.Product.Brand}";
+                BrandLabel.Text = $"Brand: {product.Brand}";
 
                 BarcodeLabel.IsVisible = true;
-                BarcodeLabel.Text = $"Barcode: {product.Product.Barcode}";
+                BarcodeLabel.Text = $"Barcode: {product.Barcode}";
 
-                if (!string.IsNullOrEmpty(product.Product.AdditionalAttributes?.Ingredients))
+                if (!string.IsNullOrEmpty(product.Ingredients))
                 {
                     IngredientsLabel.IsVisible = true;
-                    IngredientsLabel.Text = $"Ingredients: {product.Product.AdditionalAttributes.Ingredients}";
+                    IngredientsLabel.Text = $"Ingredients: {product.Ingredients}";
                 }
 
-                if (product.NutritionalInformation != null && product.NutritionalInformation.Count > 0)
+                if (product.NutritionalInformation != null)
                 {
                     NutritionInfoContainer.IsVisible = true;
-                    NutritionInfoCollectionView.ItemsSource = product.NutritionalInformation.Select(n => new NutritionalInfoModel
-                    {
-                        Component = n.Name,
-                        PerServing = n.Values.QuantityPerServing,
-                        Per100g = n.Values.QuantityPer100g100mL
-                    }).ToList();
+
+                    //NutritionInfoCollectionView.ItemsSource = product.NutritionalInformation.Select(n => new NutritionalInfoModel
+                    //{
+                    //    Component =
+                    //    PerServing = n.Values.QuantityPerServing,
+                    //    Per100g = n.Values.QuantityPer100g100mL
+                    //}).ToList();
                 }
             }
             else
