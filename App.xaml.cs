@@ -3,11 +3,15 @@
     public partial class App : Application
     {
         public static event Action OnNavigatedBack = delegate { };
-        public App()
+        public static IServiceProvider ServiceProvider { get; private set; }
+
+        public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new MainPage());
+            ServiceProvider = serviceProvider;
+            MainPage = new NavigationPage(ServiceProvider.GetRequiredService<MainPage>());
         }
+
         public static void NotifyNavigatedBack()
         {
             OnNavigatedBack.Invoke();

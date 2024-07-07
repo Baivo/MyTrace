@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
+
 namespace MyTrace
 {
     public static class MauiProgram
@@ -17,10 +17,15 @@ namespace MyTrace
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+            // Add logging
+            builder.Logging.AddDebug();
 
+            // Register services and pages with DI
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<BarcodeScanner>();
+            builder.Services.AddTransient<ILogger<SimilarProductViewModel>, Logger<SimilarProductViewModel>>();
+
+            // Build and return the app
             return builder.Build();
         }
     }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyTrace.IngredientBreakdownPage"
+             Title="Ingredient Breakdown">
+
+    <ContentPage.Content>
+        <Grid>
+            <ActivityIndicator x:Name="LoadingIndicator"
+                   IsRunning="True"
+                   IsVisible="True"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            
+            <ScrollView x:Name="ContentScrollView" IsVisible="false">
+                <VerticalStackLayout Padding="20" Spacing="20">
+                    <!-- Ingredient Name -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <!--<Label Text="Ingredient Name" Style="{StaticResource SectionTitle}" />-->
+                            <Label x:Name="IngredientNameLabel" Style="{StaticResource IngredientHeadline}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Purpose -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <Label Text="Purpose" Style="{StaticResource SectionTitle}" />
+                            <Label x:Name="PurposeLabel" Style="{StaticResource SectionContent}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Source -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <Label Text="Source" Style="{StaticResource SectionTitle}" />
+                            <Label x:Name="SourceLabel" Style="{StaticResource SectionContent}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Toxicity -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <Label Text="Toxicity" Style="{StaticResource SectionTitle}" />
+                            <Label x:Name="ToxicityLabel" Style="{StaticResource SectionContent}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Carcinogenic Properties -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <Label Text="Carcinogenic Properties" Style="{StaticResource SectionTitle}" />
+                            <Label x:Name="CarcinogenicPropertiesLabel" Style="{StaticResource SectionContent}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Healthier Alternatives -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <Label Text="Healthier Alternatives" Style="{StaticResource SectionTitle}" />
+                            <Label x:Name="HealthierAlternativesLabel" Style="{StaticResource SectionContent}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Common Uses -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <Label Text="Common Uses" Style="{StaticResource SectionTitle}" />
+                            <Label x:Name="CommonUsesLabel" Style="{StaticResource SectionContent}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Regulatory Status in Australia -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <Label Text="Regulatory Status in Australia" Style="{StaticResource SectionTitle}" />
+                            <Label x:Name="RegulatoryStatusInAustraliaLabel" Style="{StaticResource SectionContent}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Environmental Impact -->
+                    <Frame Style="{StaticResource InfoFrame}">
+                        <VerticalStackLayout>
+                            <Label Text="Environmental Impact" Style="{StaticResource SectionTitle}" />
+                            <Label x:Name="EnvironmentalImpactLabel" Style="{StaticResource SectionContent}" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

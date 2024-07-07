@@ -1,25 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-  		<BundleResource Include="Platforms\iOS\PrivacyInfo.xcprivacy" LogicalName="PrivacyInfo.xcprivacy" />
+		<BundleResource Include="Platforms\iOS\PrivacyInfo.xcprivacy" LogicalName="PrivacyInfo.xcprivacy" />
 	</ItemGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<MauiLinkerArguments>--linkskip=MyTraceLib --linkskip=MyTrace </MauiLinkerArguments>
-	</PropertyGroup>
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- Uncomment to also build the tizen app -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+	</PropertyGroup>
 
-		<!-- Note for MacCatalyst:
-		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
-		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
-		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
-		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
-		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
-
+	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>MyTrace</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -69,8 +61,8 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
@@ -81,25 +73,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Images\" />
+		<Folder Include="Resources\Images\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="ProductPage.xaml.cs">
-	    <DependentUpon>ProductPage.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="ProductPage.xaml.cs">
+			<DependentUpon>ProductPage.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="BarcodeScanner.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="IngredientBreakdown.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="ProductPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="BarcodeScanner.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="IngredientBreakdown.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="ProductPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -107,57 +99,65 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MyTraceLib\MyTraceLib.csproj" />
+		<ProjectReference Include="..\MyTraceLib\MyTraceLib.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<LinkerConfig>Linker.xml</LinkerConfig>
+		<PublishAot>True</PublishAot>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-	  <RunAOTCompilation>True</RunAOTCompilation>
-	  <PublishTrimmed>True</PublishTrimmed>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<AndroidKeyStore>False</AndroidKeyStore>
+		<PublishTrimmed>True</PublishTrimmed>
+		<RunAOTCompilation>True</RunAOTCompilation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-	  <Optimize>False</Optimize>
-	  <RunAOTCompilation>True</RunAOTCompilation>
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-	  <DebugSymbols>False</DebugSymbols>
-	  <PublishTrimmed>True</PublishTrimmed>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Optimize>False</Optimize>
+		<RunAOTCompilation>True</RunAOTCompilation>
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
+		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+		<DebugSymbols>False</DebugSymbols>
+		<AndroidKeyStore>False</AndroidKeyStore>
+		<PublishTrimmed>True</PublishTrimmed>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-	  <Optimize>False</Optimize>
-	  <MtouchUseLlvm>False</MtouchUseLlvm>
-	  <MtouchLink>None</MtouchLink>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Optimize>False</Optimize>
+		<MtouchUseLlvm>False</MtouchUseLlvm>
+		<MtouchLink>None</MtouchLink>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-	  <Optimize>False</Optimize>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Optimize>False</Optimize>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-	  <Optimize>False</Optimize>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Optimize>False</Optimize>
 	</PropertyGroup>
 
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionMyTraceHideInfoBar="True" />
+		</VisualStudio>
+	</ProjectExtensions>
 
 </Project>

@@ -11,11 +11,12 @@
                                VerticalOptions="CenterAndExpand"
                                HorizontalOptions="CenterAndExpand" />
 
-            <ScrollView x:Name="ContentScrollView"
-                        IsVisible="False">
-                <VerticalStackLayout
-                    Padding="30,0"
-                    Spacing="25">
+            <ScrollView x:Name="ContentScrollView" IsVisible="true">
+                <VerticalStackLayout Padding="30,0" Spacing="25">
+                    <Label x:Name="ProductName"
+                           IsVisible="False"
+                           Style="{StaticResource Headline}"
+                           SemanticProperties.HeadingLevel="Level1" />
 
                     <Image x:Name="ProductImage"
                            IsVisible="False"
@@ -23,31 +24,45 @@
                            HeightRequest="200"
                            Aspect="AspectFit" />
 
-                    <Label x:Name="ProductName"
-                           IsVisible="False"
-                           Style="{StaticResource Headline}"
-                           SemanticProperties.HeadingLevel="Level1" />
+                    <StackLayout Padding="10,0" Spacing="10" Orientation="Vertical">
+                        <Label x:Name="ProductDescriptionTitle" IsVisible="False" Style="{StaticResource BodyTitle}" />
+                        <Label x:Name="ProductDescription" IsVisible="False" Style="{StaticResource Body}" />
+                    </StackLayout>
 
-                    <Label x:Name="ProductPrice"
-                           IsVisible="False"
-                           TextColor="Green"
-                           Style="{StaticResource SubHeadline}" />
+                    <StackLayout Padding="10,0" Spacing="10" Orientation="Vertical">
+                        <Label x:Name="BrandLabelTitle" IsVisible="False" Style="{StaticResource BodyTitle}" />
+                        <Label x:Name="BrandLabel" IsVisible="False" Style="{StaticResource Body}" />
+                    </StackLayout>
 
-                    <Label x:Name="ProductDescription"
-                           IsVisible="False"
-                           Style="{StaticResource Body}" />
+                    <!-- StackLayout for Ingredients -->
+                    <StackLayout Padding="10,0" Spacing="10" Orientation="Vertical">
+                        <Label x:Name="IngredientsLabelTitle"
+                               IsVisible="False"
+                               Style="{StaticResource BodyTitle}" />
 
-                    <Label x:Name="BrandLabel"
-                           IsVisible="False"
-                           Style="{StaticResource Body}" />
+                        <!-- This is the StackLayout for dynamically added ingredient labels -->
+                        <StackLayout x:Name="IngredientsLabelStack"
+                                     IsVisible="False" />
+                    </StackLayout>
 
-                    <Label x:Name="BarcodeLabel"
-                           IsVisible="False"
-                           Style="{StaticResource Body}" />
-
-                    <Label x:Name="IngredientsLabel"
-                           IsVisible="False"
-                           Style="{StaticResource Body}" />
+                    <StackLayout x:Name="CountryOfOriginContainer"
+                                 Padding="10,0"
+                                 Spacing="10"
+                                 Orientation="Vertical"
+                                 IsVisible="False">
+                        <Label x:Name="CountryOfOriginTitle"
+                               Style="{StaticResource SubHeadline}"
+                               Text="Country of Origin"
+                               IsVisible="False" />
+                        <Label x:Name="CountryOfOrigin"
+                               Style="{StaticResource CountryOfOriginValue}"
+                               IsVisible="False" />
+                        <Label x:Name="CountryOfOriginAltText"
+                               Style="{StaticResource Body}"
+                               IsVisible="false"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                    </StackLayout>
 
                     <StackLayout x:Name="NutritionInfoContainer"
                                  IsVisible="False">
@@ -90,6 +105,54 @@
                            Style="{StaticResource SubHeadline}"
                            BackgroundColor="PaleVioletRed"
                            TextColor="DarkRed" />
+
+                    <Label Text="Similar Products"
+                           FontAttributes="Bold"
+                           Style="{StaticResource SubHeadline}"
+                           IsVisible="False"
+                           x:Name="SimilarProductsLabel" />
+
+                    <ActivityIndicator x:Name="SimilarProductsLoadingIndicator"
+                                       IsRunning="True"
+                                       IsVisible="True"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand" />
+
+                    <CollectionView x:Name="SimilarProductsCollectionView"
+                                    IsVisible="False"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BorderColor="Gray" CornerRadius="8" Padding="10" Margin="5" BackgroundColor="Transparent">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ItemTappedCommand, Source={x:Reference SimilarProductsCollectionView}}" CommandParameter="{Binding Product}" />
+                                    </Frame.GestureRecognizers>
+                                    <StackLayout Orientation="Horizontal" Spacing="10">
+                                        <Image Source="{Binding Product.SmallImageFile}"
+                                               WidthRequest="60"
+                                               HeightRequest="60"
+                                               Aspect="AspectFit" />
+                                        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding Product.DisplayName}"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"
+                                                   VerticalOptions="CenterAndExpand" />
+                                            <Label Text="{Binding Product.Brand}"
+                                                   VerticalOptions="CenterAndExpand" />
+                                            <Label Text="{Binding CountryOfOriginText}"
+                                                   TextColor="{Binding CountryOfOriginTextColor}"
+                                                   HorizontalOptions="End"
+                                                   VerticalOptions="End" />
+                                        </StackLayout>
+                                        <Image Source="icon_next.png"
+                                               WidthRequest="24"
+                                               HeightRequest="24"
+                                               VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>

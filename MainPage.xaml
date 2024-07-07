@@ -3,32 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyTrace.MainPage">
 
-    <ScrollView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
         <VerticalStackLayout
+            Grid.Row="1"
             Padding="30,0"
-            Spacing="25">
+            Spacing="25"
+            VerticalOptions="Center">
 
             <Label
-                x:Name="Label1"
-                Text="Hello, you!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1"/>
-
-            <Label
-                x:Name="Label2"
                 Text="Welcome to MyTrace!"
+                Style="{StaticResource Headline}"
+                HorizontalOptions="Center"/>
+
+            <Label 
+                Text="The free and easy product information app!"
                 Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="The free and easy product information app!" />
-
-            <Button
-                x:Name="BarcodeBtn"
-                Text="Scan a barcode" 
-                SemanticProperties.Hint="Opens the barcode scanner"
-                Clicked="OnButtonClicked"
-                HorizontalOptions="Fill" />
-
+                HorizontalOptions="Center"/>
         </VerticalStackLayout>
-    </ScrollView>
 
+        <Button
+            Grid.Row="2"
+            x:Name="BarcodeBtn"
+            Text="Scan a barcode" 
+            SemanticProperties.Hint="Opens the barcode scanner"
+            Clicked="OnButtonClicked"
+            HorizontalOptions="Fill"
+            VerticalOptions="Start"
+            Margin="0,20,0,0"/>
+    </Grid>
 </ContentPage>
